@@ -1,0 +1,109 @@
+<!-- <div class="container">
+  <h2>Basic Date Time Picker</h2>
+  <div class='input-group date' id='picker'>
+    <input type='text' class="form-control" />
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+  </div>
+</div> -->
+
+<!-- <section class="container">
+  <h3 class="pt-4 pb-2">Bootstrap Datepicker</h3>
+  <form>
+    <div class="row form-group">
+      <label for="date" class="col-sm-1 col-form-label">Date</label>
+      <div class="col-sm-4">
+        <div class="input-group date" id="datepicker">
+          <input type="text" class="form-control">
+          <span class="input-group-append">
+            <span class="input-group-text bg-white">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+<script type="text/javascript">
+  $(function () {
+    $('#datepicker').datepicker();
+  });
+</script> -->
+<!-- <mat-form-field class="example-full-width">
+  <mat-label>Choose a date</mat-label>
+  <input matInput [matDatepicker]="picker">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+<button mat-raised-button (click)="picker.open()" (selectionchange)="onChange($event)">Open</button> -->
+
+<!-- <form [formGroup]="formDate"></form> -->
+
+
+<!-- <mat-form-field>
+  <input matInput [matDatepicker]="pickerInicio" placeholder="Choose a date" [(ngModel)]="fechaInicio">
+  <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+  <mat-datepicker #pickerInicio [(ngModel)]="fechaInicio" ngDefaultControl></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput [matDatepicker]="pickerFin" [(ngModel)]="fechaFin">
+  <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+  <mat-datepicker #pickerFin [(ngModel)]="fechaFin" ngDefaultControl></mat-datepicker>
+</mat-form-field> -->
+
+<!-- <div class="example-button-row"><button mat-raised-button color="primary">Primary</button></div> -->
+
+<!-- <div class="col-md-6">
+  <div class=" panel panel-default">
+    <div class="panel-body">
+      <div class="form-group col-md-6">
+        <p>
+          <b>NUMERO_SOLICITUD</b>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+<!-- Pick a topic: <br>
+<mat-form-field>
+  <input matInput [matDatepicker]="pickerInicio" placeholder="" [(ngModel)]="fechaInicio"
+    [ngModelOptions]="{standalone: true}">
+  <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+  <mat-datepicker #pickerInicio [(ngModel)]="fechaInicio" ngDefaultControl></mat-datepicker>
+</mat-form-field> -->
+
+<div class="col-md-4">
+  <div class="card text-center">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      Pruebas
+    </div>
+    <div class="card-body">
+      <p>Fecha Inicio</p>
+      <mat-form-field>
+        <input matInput [matDatepicker]="pickerInicio" placeholder="" [(ngModel)]="fechaInicio"
+          [ngModelOptions]="{standalone: true}">
+        <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio [(ngModel)]="fechaInicio" ngDefaultControl></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <input type="time" id="exampleInput" name="input" [(ngModel)]="horaInicio" required />
+      <br>
+      <p>Fecha Fin</p>
+      <mat-form-field>
+        <input matInput [matDatepicker]="pickerFin" [(ngModel)]="fechaFin">
+        <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin [(ngModel)]="fechaFin" ngDefaultControl></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <input type="time" id="exampleInput" name="input" [(ngModel)]="horaFin" required />
+      <br>
+      <button type="button" class="btn btn-primary">Crear Calendario</button>
+      <button type="button" class="btn btn-primary" (click)="enviarDatos()">Terminar Calendario</button>
+    </div>
+  </div>
+</div>
