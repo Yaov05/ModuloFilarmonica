@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FilarmonicaService } from 'src/app/services/filarmonica.service';
+import { CalendarioService } from 'src/app/services/calendario.service';
 
 export interface Seleccion {
   codigo: number;
@@ -33,17 +34,24 @@ const ELEMENT_DATA: Seleccion[] = [];
 })
 export class SeleccionComponent implements OnInit {
 
+  dataSource = ELEMENT_DATA;
 
-  constructor(private filarmonicaService: FilarmonicaService) { }
+  asisBool: boolean;
+  liquidBool: boolean;
+
+  constructor(private filarmonicaService: FilarmonicaService, private calendarioService: CalendarioService) { }
 
   ngOnInit() {
+    this.calendarioService.asisChange$.subscribe(valor => this.asisBool = valor);
+    this.calendarioService.liquidChange$.subscribe(valor => this.liquidBool = valor);
   }
 
   public consultaSeleccion() {
-    var idInstrumento = ""
+    var idInstrumento = "1"
     this.filarmonicaService.get(
       "estudiantes/instrumento/" + idInstrumento
     ).subscribe((response) => {
+      console.log(response);
       if (Object.keys(response[0]).length !== 0) {
         for (var i = 0; i < Object.keys(response[0]).length; i++) {
           ELEMENT_DATA.push({
@@ -57,6 +65,24 @@ export class SeleccionComponent implements OnInit {
         }
       }
     });
+
+    ////////////////////////////// Compara las fechas y habilita asistencia
+    var idObra = 1;
+    var idTipoCalen = 1;
+    var conseCalendario = 1;
+    var fecha = new Date();
+    this.filarmonicaService.get(
+      "/calendarios/" + idObra + "/" + idTipoCalen + "/" + conseCalendario
+    ).subscribe((response) => {
+      if (Object.keys(response[0]).length !== 0) {
+        if (fecha > response[0].fechaInicio && fecha < response[0].fechaFin) {
+          this.calendarioService.setBoolAsis(this.asisBool);
+        } else if (fecha > response[0].fechaFin) {
+          this.calendarioService.setBoolLiquid(this.liquidBool);
+        }
+      }
+    });
+
   }
 
 }

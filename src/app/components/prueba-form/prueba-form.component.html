@@ -1,3 +1,73 @@
-<p>
-  prueba-form works!
-</p>
+<div class="form-row">
+  <div class="col-md-6 center">
+    <div class="card">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        Formulario Coordinador general
+      </div>
+      <div class="card-body">
+        <div class="form row">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="">Nombres y Apellidos</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Nombres" [(ngModel)]="nombre">
+            <input type="text" class="form-control" placeholder="Apellidos" [(ngModel)]="apellido">
+          </div>
+        </div>
+        <div class="form row">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="cedula">Cédula</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="cedula">
+          </div>
+        </div>
+        <div class="form row">
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="telefono">
+            <div class="input-group-append">
+              <span class="input-group-text" id="telefono">Teléfono</span>
+            </div>
+          </div>
+        </div>
+        <div class="form row">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="correo">Correo</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="correo">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <mat-form-field>
+              <input matInput [matDatepicker]="pickerInicio" placeholder="Fecha Inicio" [(ngModel)]="fechaInicio"
+                [ngModelOptions]="{standalone: true}">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+              <mat-datepicker #pickerInicio [(ngModel)]="fechaInicio" ngDefaultControl></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group col-md-4 center">
+            <input type="time" id="exampleInput" name="input" [(ngModel)]="horaInicio" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <mat-form-field>
+              <input matInput [matDatepicker]="pickerFin" placeholder="Fecha Fin" [(ngModel)]="fechaFin"
+                [ngModelOptions]="{standalone: true}">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFin [(ngModel)]="fechaFin" ngDefaultControl></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-md-4 center">
+            <input type="time" id="exampleInput" name="input" [(ngModel)]="horaFin" required />
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="enviarDatos()">Terminar Calendario</button>
+      </div>
+    </div>
+  </div>
+</div>

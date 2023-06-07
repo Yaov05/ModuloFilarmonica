@@ -23,6 +23,7 @@ export class FilarmonicaService {
   constructor(private http: HttpClient) { }
 
   get(endpoint) {
+    console.log(path + "/" + endpoint);
     return this.http.get(path + endpoint, httpOptions).pipe(
       catchError(this.handleError),
     );

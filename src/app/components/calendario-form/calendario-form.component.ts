@@ -1,6 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatFormFieldModule, MatFormField, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { FilarmonicaService } from '../../services/filarmonica.service';
+import { CalendarioService } from 'src/app/services/calendario.service';
+
+export interface Calendario {
+  idObra: number;
+  idTipoCalendario: number;
+  conseCalendario: number;
+  idEstado: number;
+  fechaInicio: Date;
+  fechaFin: Date;
+}
+
+const ELEMENT_DATA: Calendario[] = [];
 
 @Component({
   selector: 'app-calendario-form',
@@ -9,91 +21,76 @@ import { FilarmonicaService } from '../../services/filarmonica.service';
 })
 export class CalendarioFormComponent implements OnInit {
 
+  dataSource = ELEMENT_DATA;
+
   fechaInicio: Date;
   fechaFin: Date;
   horaInicio: string;
   horaFin: string;
 
+  obraCalendario: any;
+  datosCalendario: any;
+
+  selectBool: boolean;
+
   constructor(
     private filarmonicaService: FilarmonicaService,
+    private calendarioService: CalendarioService
   ) {
 
   }
 
   ngOnInit() {
+
+    this.calendarioService.selectChange$.subscribe(valor => this.selectBool = valor);
+    this.calendarioService.obraChange$.subscribe(valor => this.obraCalendario = valor);
+    this.calendarioService.dataCalendarChange$.subscribe(valor => this.datosCalendario = valor);
+
     this.fechaInicio = new Date();
     this.fechaFin = new Date();
   }
 
-  consultarObras() {
-    this.filarmonicaService
-      .get(
-        "/obras/"
-      )
-      .subscribe((data: any) => {
-        if (Object.keys(data[0]).length !== 0) {
-          // data[0]
-        } else {
-          console.log("No hay registros!!");
+  consultarCalendarios() {
+    var idObra = 1;
+    var idTipoCalen = 1;
+    var conseCalendario = 1;
+    this.filarmonicaService.get(
+      "/calendarios/" + idObra + "/" + idTipoCalen + "/" + conseCalendario
+    ).subscribe((response) => {
+      if (Object.keys(response[0]).length !== 0) {
+        for (var i = 0; i < Object.keys(response[0]).length; i++) {
+          ELEMENT_DATA.push({
+            idObra: response[0].idObra,
+            idTipoCalendario: response[0].idTipoCalendario,
+            conseCalendario: response[0].conseCalendario,
+            idEstado: response[0].idEstado,
+            fechaInicio: response[0].fechaInicio,
+            fechaFin: response[0].fechaFin
+          });
         }
-      });
+      }
+    });
+
   }
 
-  public onChange(event: any, newDate: any): void {
-    console.log("algo");
-  }
 
-  public onDate(event): void {
-    console.log(event);
-  }
-
-  enviarDatos() {
-    console.log("FechaInicio: ", this.fechaInicio);
-    var s = ""
-    if (Number((this.horaInicio).substring(0, 2)) > 12) {
-      s = this.horaInicio.substring(0, 2) + "." + this.horaInicio.substring(3, 5) + " PM"
-      var d = new Date(),
-        parts = s.match(/(\d+)\.(\d+) (\w+)/),
-        hours = /pm/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10) + 12,
-        minutes = parseInt(parts[2], 10);
-      d.setHours(hours);
-      d.setMinutes(minutes);
-    } else {
-      var hora = Number((this.horaInicio).substring(0, 2))
-      s = hora + "." + this.horaInicio.substring(3, 5) + " AM"
-      var d = new Date(),
-        parts = s.match(/(\d+)\.(\d+) (\w+)/),
-        hours = /am/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10) + 12,
-        minutes = parseInt(parts[2], 10);
-      d.setHours(hours);
-      d.setMinutes(minutes);
+  registrarCalendario() { // Y obra
+    var obraStruct = {
+      "nombre": "",
+      "descripcion": "",
+      "idTipoObra": 1,
+      "idTipoCalen": 1,
     }
+    console.log(calendarStruct);
 
+    this.filarmonicaService.post(
+      "/obras", obraStruct
+    ).subscribe((response) => {
+      console.log(response);
 
-    console.log("1: ", d);
-
-    if (Number((this.horaFin).substring(0, 2)) > 12) {
-      s = this.horaFin.substring(0, 2) + "." + this.horaFin.substring(3, 5) + " PM"
-      var d2 = new Date(),
-        parts = s.match(/(\d+)\.(\d+) (\w+)/),
-        hours = /pm/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10) + 12,
-        minutes = parseInt(parts[2], 10);
-      d2.setHours(hours);
-      d2.setMinutes(minutes);
-    } else {
-      var hora = Number((this.horaFin).substring(0, 2))
-      s = hora + "." + this.horaFin.substring(3, 5) + " AM"
-      var d2 = new Date(),
-        parts = s.match(/(\d+)\.(\d+) (\w+)/),
-        hours = /am/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10) + 12,
-        minutes = parseInt(parts[2], 10);
-      d2.setHours(hours);
-      d2.setMinutes(minutes);
-    }
-
-    console.log("2: ", d2)
-
-    var struct = {
+    });
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    var calendarStruct = {
       "IDOBRA": 1,
       "IDTIPOCALEN": 2,
       "CONSECALENDARIO": 3,
@@ -101,17 +98,33 @@ export class CalendarioFormComponent implements OnInit {
       "FECHAINICIO": d,
       "FECHAFIN": d2
     }
+    console.log(calendarStruct);
 
     this.filarmonicaService.post(
-      "/calendarios", struct
+      "/calendarios", calendarStruct
     ).subscribe((response) => {
-
+      console.log(response);
     });
-
-
-
   }
 
-
-
+  // se cambia el estado del calendario actual en planeación a inactivo
+  terminarCalendario() {
+    var idObra = ""
+    var idTipoCalendario = ""
+    var conseCalendario = ""
+    var fechaInicio = this.datosCalendario.Inicio;
+    var fechaFin = this.datosCalendario.Fin;
+    var calendarStruct = {
+      "IDESTADO": 1,
+      "FECHAINICIO": fechaInicio,
+      "FECHAFIN": fechaFin
+    }
+    this.filarmonicaService.put(
+      "/calendarios/" + idObra + "/" + idTipoCalendario + "/" + conseCalendario, calendarStruct
+    ).subscribe((response) => {
+      if (response[0].idEstado !== undefined) { // Si el estado del calendario está inactivo se habilita seleccion
+        this.calendarioService.setBoolSelect(this.selectBool);
+      }
+    });
+  }
 }

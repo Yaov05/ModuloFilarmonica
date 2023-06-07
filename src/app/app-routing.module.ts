@@ -12,6 +12,10 @@ const routes: Routes = [
   //   pathMatch: 'full'
   // },
   {
+    path: 'prueba',
+    component: PruebaFormComponent
+  },
+  {
     path: 'calendario',
     component: CalendarioFormComponent
   },

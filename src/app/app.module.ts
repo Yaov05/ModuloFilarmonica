@@ -19,7 +19,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SeleccionComponent } from './components/seleccion/seleccion.component';
 import { AsistenciaComponent } from './components/asistencia/asistencia.component';
 import { LiquidacionComponent } from './components/liquidacion/liquidacion.component';
-import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,7 @@ import { MainComponent } from './components/main/main.component';
     CalendarioFormComponent,
     SeleccionComponent,
     AsistenciaComponent,
-    LiquidacionComponent,
-    MainComponent
+    LiquidacionComponent
   ],
   imports: [
     RouterModule,
@@ -50,6 +48,8 @@ import { MainComponent } from './components/main/main.component';
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule
   ],
   providers: [
     FilarmonicaService
