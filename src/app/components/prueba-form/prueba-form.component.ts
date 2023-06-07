@@ -33,19 +33,19 @@ export class PruebaFormComponent implements OnInit {
     this.fechaFin = new Date();
   }
 
-  consultarObras() {
-    this.filarmonicaService
-      .get(
-        "/obras/"
-      )
-      .subscribe((data: any) => {
-        if (Object.keys(data[0]).length !== 0) {
-          // data[0]
-        } else {
-          console.log("No hay registros!!");
-        }
-      });
-  }
+  // consultarObras() {
+  //   this.filarmonicaService
+  //     .get(
+  //       "/obras/"
+  //     )
+  //     .subscribe((data: any) => {
+  //       if (Object.keys(data[0]).length !== 0) {
+  //         // data[0]
+  //       } else {
+  //         console.log("No hay registros!!");
+  //       }
+  //     });
+  // }
 
   public onChange(event: any, newDate: any): void {
     console.log("algo");
@@ -128,8 +128,8 @@ export class PruebaFormComponent implements OnInit {
     }
     this.calendarioService.setDatosCalendario(datosCalendario);
     /////////////////////////////////////////////////////////////////////////////////////////// consulta de actividades
-    var idPeriodo = "1"
-    var idActividad = "1"
+    var idPeriodo = "202301"
+    var idActividad = "5"
     this.filarmonicaService.get(
       "/actividades/" + idPeriodo + "/" + idActividad
     ).subscribe((response) => {

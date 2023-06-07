@@ -67,20 +67,21 @@ export class SeleccionComponent implements OnInit {
     });
 
     ////////////////////////////// Compara las fechas y habilita asistencia
-    var idObra = 1;
-    var idTipoCalen = 1;
-    var conseCalendario = 1;
+    var idObra = "2";
+    var idTipoCalen = "1";
+    var conseCalendario = 26;
     var fecha = new Date();
     this.filarmonicaService.get(
       "/calendarios/" + idObra + "/" + idTipoCalen + "/" + conseCalendario
     ).subscribe((response) => {
-      if (Object.keys(response[0]).length !== 0) {
-        if (fecha > response[0].fechaInicio && fecha < response[0].fechaFin) {
-          this.calendarioService.setBoolAsis(this.asisBool);
-        } else if (fecha > response[0].fechaFin) {
-          this.calendarioService.setBoolLiquid(this.liquidBool);
-        }
+      if (fecha > response[0].fechaInicio && fecha < response[0].fechaFin) {
+        this.calendarioService.setBoolAsis(this.asisBool);
+      } else if (fecha > response[0].fechaFin) {
+        this.calendarioService.setBoolLiquid(this.liquidBool);
       }
+      // if (Object.keys(response[0]).length !== 0) {
+        
+      // }
     });
 
   }

@@ -51,71 +51,74 @@ export class CalendarioFormComponent implements OnInit {
   }
 
   consultarCalendarios() {
-    var idObra = 1;
-    var idTipoCalen = 1;
-    var conseCalendario = 1;
+    var idObra = "1";
+    var idTipoCalen = "6";
+    var conseCalendario = 23;
     this.filarmonicaService.get(
       "/calendarios/" + idObra + "/" + idTipoCalen + "/" + conseCalendario
     ).subscribe((response) => {
-      if (Object.keys(response[0]).length !== 0) {
-        for (var i = 0; i < Object.keys(response[0]).length; i++) {
-          ELEMENT_DATA.push({
-            idObra: response[0].idObra,
-            idTipoCalendario: response[0].idTipoCalendario,
-            conseCalendario: response[0].conseCalendario,
-            idEstado: response[0].idEstado,
-            fechaInicio: response[0].fechaInicio,
-            fechaFin: response[0].fechaFin
-          });
-        }
-      }
+      ELEMENT_DATA.push({
+        idObra: response[0].idObra,
+        idTipoCalendario: response[0].idTipoCalendario,
+        conseCalendario: response[0].conseCalendario,
+        idEstado: response[0].idEstado,
+        fechaInicio: response[0].fechaInicio,
+        fechaFin: response[0].fechaFin
+      });
+      // if (Object.keys(response[0]).length !== 0) {
+      //   for (var i = 0; i < Object.keys(response[0]).length; i++) {
+
+      //   }
+      // }
     });
 
   }
 
 
-  registrarCalendario() { // Y obra
-    var obraStruct = {
-      "nombre": "",
-      "descripcion": "",
-      "idTipoObra": 1,
-      "idTipoCalen": 1,
-    }
-    console.log(calendarStruct);
+  // registrarCalendario() { // Y obra
+  //   var obraStruct = {
+  //     "nombre": "",
+  //     "descripcion": "",
+  //     "idTipoObra": 1,
+  //     "idTipoCalen": 1,
+  //   }
+  //   console.log(calendarStruct);
 
-    this.filarmonicaService.post(
-      "/obras", obraStruct
-    ).subscribe((response) => {
-      console.log(response);
+  //   this.filarmonicaService.post(
+  //     "/obras", obraStruct
+  //   ).subscribe((response) => {
+  //     console.log(response);
 
-    });
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    var calendarStruct = {
-      "IDOBRA": 1,
-      "IDTIPOCALEN": 2,
-      "CONSECALENDARIO": 3,
-      "IDESTADO": 3,
-      "FECHAINICIO": d,
-      "FECHAFIN": d2
-    }
-    console.log(calendarStruct);
+  //   });
+  //   ///////////////////////////////////////////////////////////////////////////////////////////
+  //   var d = this.datosCalendario.Inicio;
+  //   var d2 = this.datosCalendario.Fin;
+  //   var calendarStruct = {
+  //     "IDOBRA": 1,
+  //     "IDTIPOCALEN": 2,
+  //     "CONSECALENDARIO": 3,
+  //     "IDESTADO": 3,
+  //     "FECHAINICIO": d,
+  //     "FECHAFIN": d2
+  //   }
+  //   console.log(calendarStruct);
 
-    this.filarmonicaService.post(
-      "/calendarios", calendarStruct
-    ).subscribe((response) => {
-      console.log(response);
-    });
-  }
+  //   this.filarmonicaService.post(
+  //     "/calendarios", calendarStruct
+  //   ).subscribe((response) => {
+  //     console.log(response);
+  //   });
+  // }
 
   // se cambia el estado del calendario actual en planeación a inactivo
   terminarCalendario() {
-    var idObra = ""
-    var idTipoCalendario = ""
-    var conseCalendario = ""
+    var idObra = "1"
+    var idTipoCalendario = "4"
+    var conseCalendario = 12
     var fechaInicio = this.datosCalendario.Inicio;
     var fechaFin = this.datosCalendario.Fin;
     var calendarStruct = {
-      "IDESTADO": 1,
+      "IDESTADO": "INACTIVO",
       "FECHAINICIO": fechaInicio,
       "FECHAFIN": fechaFin
     }
